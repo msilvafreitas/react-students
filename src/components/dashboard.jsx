@@ -33,8 +33,12 @@ export function Dashboard() {
         return regex.test(title);
     }
 
+
     useEffect(() => {
         getData();
+    }, [])
+
+    useEffect(() => {
         const newList = students.filter(student => testSearch(student.firstName));
         console.log(newList)
         setStudents(newList);
