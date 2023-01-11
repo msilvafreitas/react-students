@@ -6,8 +6,15 @@ export function DashboardAluno() {
     const token = localStorage.getItem('token');
     const userToken = JSON.parse(token);
     const DATA_URL = '/aluno/score';
-
-    const [notas, setNotas] = useState([]);
+ 
+    const [notas, setNotas] = useState([{
+        n1: '...',
+        n2: '...',
+        n3: '...',
+        n4: '...',
+        average: '...',
+        situation: '...'
+    }])
 
     let config = {
         headers: {
@@ -20,12 +27,16 @@ export function DashboardAluno() {
             config
         )
             .then((response) => {
-                setNotas(response)
-                console.log(notas)
+                setNotas(response.data.scores)
+
             })
             .catch()
     }
 
+    useEffect(() => {
+
+        console.log(notas)
+    }, [notas]);
 
     useEffect(() => {
         getData();
@@ -59,32 +70,32 @@ export function DashboardAluno() {
                                 </tr>
                             </thead>
                             <tbody className="bg-white">
+                                
+                                        <tr key={notas[0].average}>
 
-                                        {/* <tr key={notas.scores[0].average}>
-
                                             <td className="px-4 py-3 whitespace-no-wrap border-b border-gray-200 text-black-text">
-                                                {parseFloat(notas.scores[0].n1).toFixed(2)}
+                                                {parseFloat(notas[0].n1).toFixed(2)}
                                             </td>
                                             <td className="px-4 py-3 whitespace-no-wrap border-b border-gray-200 text-black-text">
-                                                {parseFloat(notas.scores[0].n2).toFixed(2)}
+                                                {parseFloat(notas[0].n2).toFixed(2)}
                                             </td>
                                             <td className="px-4 py-3 whitespace-no-wrap border-b border-gray-200 text-black-text">
-                                                {parseFloat(notas.scores[0].n3).toFixed(2)}
+                                                {parseFloat(notas[0].n3).toFixed(2)}
                                             </td>
                                             <td className="px-4 py-3 whitespace-no-wrap border-b border-gray-200 text-black-text">
-                                                {parseFloat(notas.scores[0].n4).toFixed(2)}
+                                                {parseFloat(notas[0].n4).toFixed(2)}
                                             </td>
                                             <td className="px-4 py-3 whitespace-no-wrap border-b border-gray-200 text-black-text">
-                                                {parseFloat(notas.scores[0].average).toFixed(2)}
+                                                {parseFloat(notas[0].average).toFixed(2)}
                                             </td>
 
                                             <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                                                <span className={`px-6 py-[6px] inline-flex leading-5 rounded-full ${notas.scores[0].situation === 'Aprovado' ? "bg-green-status" : "bg-red-300"}`}>
-                                                    {notas.scores[0].situation}
+                                                <span className={`px-6 py-[6px] inline-flex leading-5 rounded-full ${notas[0].situation === 'Aprovado' ? "bg-green-status" : "bg-red-300"}`}>
+                                                    {notas[0].situation}
                                                 </span>
                                             </td>
 
-                                        </tr> */}
+                                        </tr>
                                     
 
                             </tbody>
